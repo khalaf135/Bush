@@ -1,20 +1,19 @@
-
-// ---------- Language + Categories ----------
+// ---- اللغة + التصنيفات (بدون "الكل") ----
 const LANG = { current: 'ar' }; // 'ar' or 'en'
 
 const CATS = [
-  { id: 'coffee',  name_ar: 'قهوة',               name_en: 'Coffee' },
-  { id: 'drinks',  name_ar: 'مشروبات',            name_en: 'Drinks' },
-  { id: 'bakery',  name_ar: 'مخبوزات',            name_en: 'Bakery' },
-  { id: 'sweets',  name_ar: 'حلويات',             name_en: 'Sweets' },
-  { id: 'beans',   name_ar: 'أنواع البن/محامص',   name_en: 'Beans / Roasters' },
+  { id: 'coffee',  name_ar: 'قهوة',             name_en: 'Coffee' },
+  { id: 'drinks',  name_ar: 'مشروبات',          name_en: 'Drinks' },
+  { id: 'bakery',  name_ar: 'مخبوزات',          name_en: 'Bakery' },
+  { id: 'sweets',  name_ar: 'حلويات',           name_en: 'Sweets' },
+  { id: 'beans',   name_ar: 'أنواع البن/محامص', name_en: 'Beans / Roasters' },
 ];
 
-// ---------- Menu Items ----------
+// ---- عناصر المنيو (عدّل الأسماء/الأسعار هنا) ----
 const ITEMS = [
   // Coffee
-  { id:'v60-hot',  cat:'coffee', name_ar:'ڤ60 (حار)', name_en:'V60 · Hot',  price:14.0, note_ar:'قهوة ترشيح', note_en:'Pour-over' },
-  { id:'v60-cold', cat:'coffee', name_ar:'ڤ60 (بارد)', name_en:'V60 · Cold', price:16.0, note_ar:'', note_en:'' },
+  { id:'v60-hot',  cat:'coffee', name_ar:'V60 (حار)', name_en:'V60 · Hot',  price:14.0, note_ar:'قهوة ترشيح', note_en:'Pour-over' },
+  { id:'v60-cold', cat:'coffee', name_ar:'V60 (بارد)', name_en:'V60 · Cold', price:16.0, note_ar:'', note_en:'' },
   { id:'cof-day-h',cat:'coffee', name_ar:'قهوة اليوم (حار)', name_en:'Hot Coffee of the Day', price:12.0, note_ar:'', note_en:'' },
   { id:'cof-day-i',cat:'coffee', name_ar:'قهوة اليوم (بارد)', name_en:'Iced Coffee of the Day', price:14.0, note_ar:'', note_en:'' },
 
@@ -29,12 +28,12 @@ const ITEMS = [
   { id:'magicbar', cat:'bakery', name_ar:'ماجيك بار', name_en:'Magic Bar', price:7.50, note_ar:'', note_en:'' },
 
   // Beans/Roasters
-  { id:'w-roast',  cat:'beans', name_ar:'محمصة دبليو', name_en:'W Roaster', price:55.0, note_ar:'250غ', note_en:'250g' },
+  { id:'w-roast',  cat:'beans', name_ar:'محمصة W', name_en:'W Roaster', price:55.0, note_ar:'250غ', note_en:'250g' },
   { id:'riyadh',   cat:'beans', name_ar:'محمصة الرياض', name_en:'Riyadh Roaster', price:55.0, note_ar:'250غ', note_en:'250g' },
   { id:'tricycle', cat:'beans', name_ar:'محمصة ترايسكل', name_en:'Tricycle Roaster', price:55.0, note_ar:'250غ', note_en:'250g' },
 ];
 
-// ---------- Elements ----------
+// ---- عناصر DOM ----
 const catNav   = document.getElementById('catNav');
 const grid     = document.getElementById('grid');
 const searchEl = document.getElementById('searchInput');
@@ -44,44 +43,37 @@ const langEn   = document.getElementById('langEn');
 const subTitle = document.getElementById('subTitle');
 const footerNote = document.getElementById('footerNote');
 
-let state = {
-  cat: 'coffee', // default tab
-  q: ''
-};
+let state = { cat: 'coffee', q: '' }; // تبويب افتراضي
 
-// ---------- i18n helpers ----------
+// ---- وظائف ترجمة بسيطة ----
 function tCat(catId){
   const c = CATS.find(c=>c.id===catId);
   return LANG.current === 'ar' ? c.name_ar : c.name_en;
 }
-function tItemName(item){
-  return LANG.current === 'ar' ? item.name_ar : item.name_en;
-}
-function tItemNote(item){
-  const note = LANG.current === 'ar' ? item.note_ar : item.note_en;
-  return note || '';
-}
+function tItemName(item){ return LANG.current === 'ar' ? item.name_ar : item.name_en; }
+function tItemNote(item){ return (LANG.current === 'ar' ? item.note_ar : item.note_en) || ''; }
+
 function tUI(){
   if(LANG.current === 'ar'){
     document.documentElement.lang = 'ar';
-    document.documentElement.dir = 'rtl';
+    document.documentElement.dir  = 'rtl';
     searchEl.placeholder = 'ابحث في القائمة...';
     subTitle.textContent = 'قهوة مختصة · Specialty Coffee';
-    footerNote.textContent = 'تصميم بسيط مستوحى من لوحة BUNH • حرّره كما تشاء';
-    langAr.classList.add('active'); langAr.setAttribute('aria-pressed','true');
-    langEn.classList.remove('active'); langEn.setAttribute('aria-pressed','false');
+    footerNote.textContent = 'BUNH';
+    langAr.classList.add('active');   langAr.setAttribute('aria-pressed','true');
+    langEn.classList.remove('active');langEn.setAttribute('aria-pressed','false');
   }else{
     document.documentElement.lang = 'en';
-    document.documentElement.dir = 'ltr';
+    document.documentElement.dir  = 'ltr';
     searchEl.placeholder = 'Search the menu...';
     subTitle.textContent = 'Specialty Coffee · Crafted Menu';
     footerNote.textContent = 'Simple design inspired by BUNH board • Edit as you like';
-    langEn.classList.add('active'); langEn.setAttribute('aria-pressed','true');
-    langAr.classList.remove('active'); langAr.setAttribute('aria-pressed','false');
+    langEn.classList.add('active');   langEn.setAttribute('aria-pressed','true');
+    langAr.classList.remove('active');langAr.setAttribute('aria-pressed','false');
   }
 }
 
-// ---------- Render category pills ----------
+// ---- تصنيفات ----
 function renderCats(){
   catNav.innerHTML = '';
   CATS.forEach((c)=>{
@@ -103,7 +95,7 @@ function renderCats(){
   });
 }
 
-// ---------- Render cards ----------
+// ---- بطاقات ----
 function renderGrid(){
   const q = state.q.trim().toLowerCase();
   const filtered = ITEMS.filter(item=>{
@@ -118,7 +110,7 @@ function renderGrid(){
     return;
   }
 
-  grid.innerHTML = filtered.map(item => {
+  grid.innerHTML = filtered.map(item=>{
     const price = (Math.round(item.price * 100) / 100).toFixed(2);
     const badge = tCat(item.cat);
     const note  = tItemNote(item);
@@ -136,7 +128,7 @@ function renderGrid(){
   }).join('');
 }
 
-// ---------- Search ----------
+// ---- بحث ----
 searchEl.addEventListener('input', (e)=>{
   state.q = e.target.value;
   renderGrid();
@@ -148,17 +140,15 @@ clearBtn.addEventListener('click', ()=>{
   searchEl.focus();
 });
 
-// ---------- Language toggle events ----------
+// ---- تبديل اللغة ----
 langAr.addEventListener('click', ()=>{
-  LANG.current = 'ar';
-  tUI(); renderCats(); renderGrid();
+  LANG.current = 'ar'; tUI(); renderCats(); renderGrid();
 });
 langEn.addEventListener('click', ()=>{
-  LANG.current = 'en';
-  tUI(); renderCats(); renderGrid();
+  LANG.current = 'en'; tUI(); renderCats(); renderGrid();
 });
 
-// ---------- Init ----------
+// ---- Init ----
 tUI();
 renderCats();
 renderGrid();
