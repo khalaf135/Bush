@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BUNH | بنّه - القائمة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <h1 class="brand-en">BUNH</h1>
+      <span class="brand-divider">|</span>
+      <h1 class="brand-ar">بُنّه</h1>
+    </div>
+    <p class="subtitle" id="subTitle">قهوة مختصة · Specialty Coffee</p>
+
+    <div class="lang-switch">
+      <button id="langAr" class="lang-btn active" aria-pressed="true">العربية</button>
+      <button id="langEn" class="lang-btn" aria-pressed="false">English</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="ابحث في القائمة..." aria-label="بحث" />
+        <button id="clearSearch" class="ghost" title="مسح البحث" aria-label="مسح">×</button>
+      </div>
+
+      <nav id="catNav" class="cat-nav" role="tablist" aria-label="التصنيفات">
+        <!-- Filled by JS -->
+      </nav>
+    </section>
+
+    <section id="grid" class="grid" aria-live="polite">
+      <!-- Cards inserted here -->
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <small id="footerNote">تصميم بسيط مستوحى من لوحة BUNH • حرّره كما تشاء</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
